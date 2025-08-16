@@ -1,4 +1,4 @@
-I disliked the shortened opcodes that 6502 assembly typically uses to I made this utility :)
+I disliked the shortened opcodes that 6502 assembly typically uses so I made this utility :)
 
 | Shitty502 Opcode  | 6502 Opcode | Explanation |
 | ----------------- | ----------- | ----------- |
