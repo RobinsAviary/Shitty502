@@ -3,7 +3,7 @@ I disliked the shortened opcodes that 6502 assembly typically uses so I made thi
 
 ## Usage
 ```
-Shitty502 [filename] [output]
+Shitty502 [filename] [output] [flags...]
 ```
 
 Output is optional, though it defaults to ``output.s``
