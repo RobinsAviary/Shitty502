@@ -1,3 +1,5 @@
+I disliked the shortened opcodes that 6502 assembly typically uses to I made this utility :)
+
 | Shitty502 Opcode  | 6502 Opcode | Explanation |
 | ----------------- | ----------- | ----------- |
 | SetA              | LDA         | Set the accumulator. |
