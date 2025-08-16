@@ -5,16 +5,30 @@ string errorSuffix = "Error: ";
 string crossparserError = name + " Cross-Parser " + errorSuffix;
 string assemblySourceExt = ".s";
 string outputFile = "output" + assemblySourceExt;
+char flagPrefix = '-';
+
+Opcodes opcodes = new();
 
 if (args.Length > 0)
 {
     string filename = args.First();
 
-    if (args.Length > 1) {
-        outputFile = args[1];
-        if (!outputFile.EndsWith(assemblySourceExt))
+    uint i = 1;
+    while (i < args.Length)
+    {
+        string arg = args[i];
+
+        if (!arg.StartsWith(flagPrefix) && arg.EndsWith(assemblySourceExt))
         {
-            outputFile += assemblySourceExt;
+            outputFile = args[i];
+            if (!outputFile.EndsWith(assemblySourceExt))
+            {
+                outputFile += assemblySourceExt;
+            }
+        }
+        else if (arg.StartsWith(flagPrefix) && arg.EndsWith("reverse"))
+        {
+            Console.WriteLine("Reverse!");
         }
     }
 
@@ -27,7 +41,8 @@ if (args.Length > 0)
             var lines = File.ReadLines(filename);
             foreach (string line in lines)
             {
-                foreach (var pair in Opcodes.opcodes)
+                // TODO: Call a function or index instead of iterating
+                foreach (var pair in opcodes.opcodes)
                 {
                     if (line.StartsWith(pair.Key))
                     {
@@ -39,6 +54,7 @@ if (args.Length > 0)
             }
 
             output = output.TrimEnd('\n');
+            output = output.Replace("//", ";");
 
             File.WriteAllText(outputFile, output);
         }
