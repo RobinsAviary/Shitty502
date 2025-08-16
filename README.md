@@ -1,4 +1,11 @@
+# Shitty502
 I disliked the shortened opcodes that 6502 assembly typically uses so I made this utility :)
+
+## Usage
+``Shitty502 [filename] [output]``
+Output is optional, though it defaults to "output.s"
+
+## Opcodes
 
 | Shitty502 Opcode  | 6502 Opcode | Explanation |
 | ----------------- | ----------- | ----------- |
