@@ -6,6 +6,7 @@ string crossparserError = name + " Cross-Parser " + errorSuffix;
 string assemblySourceExt = ".s";
 string outputFile = "output" + assemblySourceExt;
 char flagPrefix = '-';
+bool reverseInterpret = false;
 
 Opcodes opcodes = new();
 
@@ -28,8 +29,10 @@ if (args.Length > 0)
         }
         else if (arg.StartsWith(flagPrefix) && arg.EndsWith("reverse"))
         {
-            Console.WriteLine("Reverse!");
+            reverseInterpret = true;
         }
+
+        i++;
     }
 
     if (File.Exists(filename))
@@ -45,9 +48,33 @@ if (args.Length > 0)
                 // TODO: Call a function or index instead of iterating
                 foreach (var pair in opcodes.opcodes)
                 {
-                    if (line.StartsWith(pair.Key))
+                    string prefix = "";
+                    if (reverseInterpret)
                     {
-                        output += line.Replace(pair.Key, pair.Value) + "\n";
+                        prefix = pair.Value;
+                    }
+                    else
+                    {
+                        prefix = pair.Key;
+                    }
+
+                    if (line.StartsWith(prefix))
+                    {
+                        string from = "";
+                        string to = "";
+
+                        if (reverseInterpret)
+                        {
+                            from = pair.Value;
+                            to = pair.Key;
+                        }
+                        else
+                        {
+                            from = pair.Key;
+                            to = pair.Value;
+                        }
+
+                        output += line.Replace(from, to) + "\n";
 
                         startsWithOpcode = true;
                         break;
@@ -61,7 +88,15 @@ if (args.Length > 0)
             }
 
             output = output.TrimEnd('\n');
-            output = output.Replace("//", ";");
+            if (reverseInterpret)
+            {
+                output = output.Replace(";", "//");
+            }
+            else
+            {
+                output = output.Replace("//", ";");
+            }
+                
 
             File.WriteAllText(outputFile, output);
         }
