@@ -41,6 +41,7 @@ if (args.Length > 0)
             var lines = File.ReadLines(filename);
             foreach (string line in lines)
             {
+                bool startsWithOpcode = false;
                 // TODO: Call a function or index instead of iterating
                 foreach (var pair in opcodes.opcodes)
                 {
@@ -48,8 +49,14 @@ if (args.Length > 0)
                     {
                         output += line.Replace(pair.Key, pair.Value) + "\n";
 
+                        startsWithOpcode = true;
                         break;
                     }
+                }
+
+                if (!startsWithOpcode)
+                {
+                    output += line + "\n";
                 }
             }
 
