@@ -6,7 +6,7 @@ I disliked the shortened opcodes that 6502 assembly typically uses so I made thi
 Shitty502 [filename] [output] [flags...]
 ```
 
-Output is optional, though it defaults to ``output.s``
+Output is optional, though it defaults to ``<filename>-out.s``
 
 The flag ``-reverse`` is planned to be supported for reverse decompilation in order to make reading older code easier.
 
