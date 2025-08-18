@@ -1,4 +1,5 @@
 ﻿using Shitty502;
+using System.Text.RegularExpressions;
 
 string name = "Shitty502";
 string errorSuffix = "Error: ";
@@ -14,8 +15,7 @@ if (args.Length > 0)
 {
     string filename = args.First();
 
-    uint i = 1;
-    while (i < args.Length)
+    for (uint i = 1; i < args.Length; i++)
     {
         string arg = args[i];
 
@@ -31,72 +31,52 @@ if (args.Length > 0)
         {
             reverseInterpret = true;
         }
-
-        i++;
     }
 
     if (File.Exists(filename))
     {
         if (filename.EndsWith(".s"))
         {
+            
             string output = "";
 
             var lines = File.ReadLines(filename);
             foreach (string line in lines)
             {
-                bool startsWithOpcode = false;
-                // TODO: Call a function or index instead of iterating
-                foreach (var pair in opcodes.opcodes)
+                string comment = "";
+                bool commentFound = false;
+
+                int commentPos = line.IndexOf("//");
+
+                if (commentPos != -1)
                 {
-                    string prefix = "";
-                    if (reverseInterpret)
+                    commentFound = true;
+                    comment = line.Substring(commentPos);
+                }
+
+                string mainLine = line.Substring(0, line.Length - comment.Length);
+
+                string[] mainSplit = mainLine.TrimStart().Split(" ");
+                
+                if (mainSplit.Length > 0)
+                {
+                    string opcode = mainSplit[0];
+
+                    if (opcodes.opcodes.ContainsKey(opcode))
                     {
-                        prefix = pair.Value;
-                    }
-                    else
-                    {
-                        prefix = pair.Key;
-                    }
+                        string altCode = opcodes.opcodes[opcode];
 
-                    if (line.StartsWith(prefix))
-                    {
-                        string from = "";
-                        string to = "";
-
-                        if (reverseInterpret)
-                        {
-                            from = pair.Value;
-                            to = pair.Key;
-                        }
-                        else
-                        {
-                            from = pair.Key;
-                            to = pair.Value;
-                        }
-
-                        output += line.Replace(from, to) + "\n";
-
-                        startsWithOpcode = true;
-                        break;
+                        var regex = new Regex(Regex.Escape(opcode));
+                        mainLine = regex.Replace(mainLine, altCode, 1);
                     }
                 }
 
-                if (!startsWithOpcode)
-                {
-                    output += line + "\n";
-                }
+                output += mainLine;
+                if (commentFound) output += ";" + comment.Substring(2);
+                output += "\n";
             }
 
             output = output.TrimEnd('\n');
-            if (reverseInterpret)
-            {
-                output = output.Replace(";", "//");
-            }
-            else
-            {
-                output = output.Replace("//", ";");
-            }
-                
 
             File.WriteAllText(outputFile, output);
         }
