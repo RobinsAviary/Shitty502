@@ -8,6 +8,8 @@ Shitty502 [filename] [output] [flags...]
 
 Output is optional, though it defaults to ``output.s``
 
+The flag ``-reverse`` is planned to be supported for reverse decompilation in order to make reading older code easier.
+
 ## Opcodes
 
 | Shitty502 Opcode  | 6502 Opcode | Explanation |
