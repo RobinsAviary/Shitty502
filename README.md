@@ -44,7 +44,7 @@ Output is optional, though it defaults to ``output.s``
 | EnableInterrupts  | CLI         | 
 | ClearOverflow     | CLV         | Clear the overflow flag. |
 | SetCarry          | SEC         | Activate the carry flag. |
-| EnableDecimal     | SED         | Enable decimal math. Not available on every system. |
+| EnableDecimal     | SED         | Enable decimal math. On by default. Not available on every system. |
 | DisableInterrupts | SEI         | 
 | CompareA          | CMP         | 
 | CompareX          | CPX         | 
