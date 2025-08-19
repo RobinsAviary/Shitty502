@@ -2,7 +2,7 @@
 {
     internal class Opcodes
     {
-        public Dictionary<string, string> opcodes = [];
+        public Dictionary<string, string> list = [];
 
         public void LoadFile(string filename)
         {
@@ -20,7 +20,7 @@
                 {
                     string altCode = line.Split(" ").First();
 
-                    opcodes[lastKey] = altCode;
+                    list[lastKey] = altCode;
                 }
 
                 key = !key;

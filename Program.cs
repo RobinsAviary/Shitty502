@@ -37,10 +37,20 @@ if (args.Length > 0)
     {
         if (filename.EndsWith(".s"))
         {
-            
             string output = "";
 
-            var lines = File.ReadLines(filename);
+            TextfileReader textfileReader = new();
+
+            string code = textfileReader.ReadTextfile(filename);
+
+            Lexer lexer = new();
+            var tokens = lexer.LexCode(code);
+            foreach (var token in tokens)
+            {
+                Console.WriteLine($"Token: \"{token.text}\", Line: {token.lineNumber}");
+            }
+
+            string[] lines = code.Split("\n");
             foreach (string line in lines)
             {
                 string comment = "";
@@ -62,9 +72,9 @@ if (args.Length > 0)
                 {
                     string opcode = mainSplit[0];
 
-                    if (opcodes.opcodes.ContainsKey(opcode))
+                    if (opcodes.list.ContainsKey(opcode))
                     {
-                        string altCode = opcodes.opcodes[opcode];
+                        string altCode = opcodes.list[opcode];
 
                         var regex = new Regex(Regex.Escape(opcode));
                         mainLine = regex.Replace(mainLine, altCode, 1);
