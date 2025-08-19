@@ -16,8 +16,11 @@
             int linesLength = lines.Length;
             for (uint lineNumber = 0; lineNumber < linesLength; lineNumber++)
             {
-                string line = lines[lineNumber].Trim();
-                string[] tokenTexts = line.Split(" ");
+                string fullLine = lines[lineNumber];
+                string trimmedLine = fullLine.Trim();
+
+                // Split text by spaces
+                string[] tokenTexts = trimmedLine.Split(" ");
 
                 foreach (string tokenText in tokenTexts)
                 {
