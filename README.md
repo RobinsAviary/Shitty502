@@ -1,6 +1,8 @@
 # Shitty502
 I disliked the shortened opcodes that 6502 assembly typically uses so I made this command-line utility :)
 
+This effectively works as a superset/mod language for 6502 ASM. You can use standard opcodes and the utility will pass over them as normal.
+
 ## Usage
 ```
 Shitty502 [filename] [output] [flags...]
